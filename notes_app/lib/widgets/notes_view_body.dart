@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes_app/cubits/notes_cubit/notes_cubit_cubit.dart';
 import 'package:notes_app/widgets/custom_app_bar.dart';
 import 'package:notes_app/widgets/notes_list_view.dart';
 
@@ -7,23 +9,18 @@ class NotesViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
-    Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Column(
-        children: [
-          SizedBox(height: 50,),
-          CustomAppBar(title: 'Notes',
-           icon: Icons.search,
-          ),
-          Expanded(child: NotesListView()),
-         
-            
-          
-        ],
+    return BlocProvider(
+      create: (context) => NotesCubit()..fetchAllNotes(),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Column(
+          children: [
+            SizedBox(height: 50),
+            CustomAppBar(title: 'Notes', icon: Icons.search),
+            Expanded(child: NotesListView()),
+          ],
+        ),
       ),
     );
   }
 }
-
-
